@@ -19,7 +19,7 @@ RUN DOWNLOAD_URL=`curl -Ls https://plex.tv/downloads | grep -o '[^"'"'"']*amd64.
 
 # Create writable config directory in case the volume isn't mounted
 RUN mkdir /config && \
-	chown plex:plex /config
+	chown -R plex:plex /config
 
 # Configure autostart using supervisord
 ADD config/plex.conf /etc/supervisor/conf.d/plex.conf
