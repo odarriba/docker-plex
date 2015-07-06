@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get install -y curl
 
 # Create plex user
-RUN useradd --system -M --shell /usr/sbin/nologin plex
+RUN useradd --disabled-password plex
 
 WORKDIR /tmp
 
@@ -19,7 +19,8 @@ RUN DOWNLOAD_URL=`curl -Ls https://plex.tv/downloads | grep -o '[^"'"'"']*amd64.
 
 # Create writable config directory in case the volume isn't mounted
 RUN mkdir /config && \
-	sed -i "s/\/etc\/init.d\/supervisor start/chown -R plex:plex \/config\n\/etc\/init.d\/supervisor start/g" /etc/bash.bashrc
+	chown -R plex:plex /config && \
+	chown -R plex:plex /donwloads
 
 # Configure autostart using supervisord
 ADD config/plex.conf /etc/supervisor/conf.d/plex.conf
