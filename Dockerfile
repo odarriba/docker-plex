@@ -5,8 +5,8 @@ RUN apt-get update && \
 	apt-get dist-upgrade -y && \
     apt-get install -y curl
 
-# Create plex user
-RUN useradd --disabled-password plex
+# Create the user 'plex'
+RUN	adduser --disabled-password plex
 
 WORKDIR /tmp
 
@@ -17,10 +17,10 @@ RUN DOWNLOAD_URL=`curl -Ls https://plex.tv/downloads | grep -o '[^"'"'"']*amd64.
     dpkg -i plexmediaserver.deb && \
     rm -f plexmediaserver.deb
 
-# Create writable config directory in case the volume isn't mounted
+# Create the writable config directory in case the volume isn't mounted
 RUN mkdir /config && \
 	chown -R plex:plex /config && \
-	chown -R plex:plex /donwloads
+	chown -R plex:plex /media
 
 # Configure autostart using supervisord
 ADD config/plex.conf /etc/supervisor/conf.d/plex.conf
