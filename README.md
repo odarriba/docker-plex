@@ -43,7 +43,7 @@ To install the script, just execute `sudo cp config/plexmediaserver.conf /etc/in
 * To start the service: `sudo service plexmediaserver start`
 * To stop the service: `sudo service plexmediaserver stop`
 
-**Note:** when you stop the service, the container keeps running. Yo must execute `sudo docker stop plex`in order to stop the server.
+**Note:** when you stop the service, the container keeps running. Yo must execute `sudo docker stop plexmediaserver`in order to stop the server.
 
 ## Contributors
 
