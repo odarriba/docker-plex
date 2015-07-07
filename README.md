@@ -13,9 +13,9 @@ Now you should have a docker instance running `Plex Media Server`.
 
 ## First configuration
 
-Due to some network security aspects of Docker, the container is going to be running in a separate subnet, so you can't really access your Plex server for configuration (this should be made in the same network).
+Due to some network security aspects of Docker, the container is going to be running in a separate subnet, **so you can't really access your Plex server for configuration** (to do it, the server should be in the same network).
 
-To solve this issue, you must configure the file called `Preferences.xml` inside your configuration folder, under the `Plex Media Server`folder. On it you have to add an attribute to the tag `<Preference>`, following this structure: `allowedNetworks="192.168.0.0/255.255.255.0"` (with your network configuration).
+**Soltuion:**, you must edit a file called `Preferences.xml` inside your configuration folder. On it you have to add an attribute to the tag `<Preference>`, following this structure: `allowedNetworks="192.168.0.0/255.255.255.0"` (with your own's network configuration).
 
 After making the change you can restart the container and you should be able to access to your Plex Media Server using your web browser (`http://your_server_ip:32400/web`).
 
