@@ -21,6 +21,12 @@ After making the change you can restart the container and you should be able to 
 
 ## Auto-discovering
 
+Below this text you can see two different approaches to this problem. The secure one doesn't actually enable the auto discovery, but it's a good approach if you want to have a secure environment. On the other hand, you can use an insecure method that will work very well but it's not recommended because of it's insecurity.
+
+### Secure method
+
+**NOTE:** due to some problems inside Plex, it appears not to know it's local IP address inside Docker subnet, avoiding the local discovery to work. If you really want to use this feature, look below for the insecure method.
+
 Avahi daemon is commonly used to help your computers to find the services provided by a server.
 
 Avahi isn't built into this Docker image because, due to Docker's networking limitations, Avahi can't spread it's messages to announce the services out of the Docker virtual network.
@@ -33,6 +39,18 @@ Avahi isn't built into this Docker image because, due to Docker's networking lim
 * Restart Avahi's daemon: `sudo /etc/init.d/avahi-daemon restart`
 
 **But why you need to install this on your host and not in the container?** Because if you don't do it this way, the discovery message won't be able to reach your computers.
+
+**What will I get with this approach?:** The service will be announced on the network, but you will have to login with your account to detect your server. Also, all the streaming you receive is going to be reduced as if you are in an external network.
+
+### Insecure method
+
+The method described in this section is **insecure and non-recommended**. But at the moment of writing this, Plex appears to be incompatible with a double NAT configuration like the one Docker has.
+
+But, if you are brave like a viking, you can use it at your own risk.
+
+The idea is to attach the Docker container to the network stack of your host. To do it, you can simply change the `-h your_host_name` to `--net=host` and everything should work.
+
+**Disadvantages (for disclaimers):** connecting your container to your host network stack means that the container can listen to everything you receive. It will use as many ports as it needs but it's completely insecure and it isn't the correct approach for an isolated service.
 
 ## Auto start the service
 
