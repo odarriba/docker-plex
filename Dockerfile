@@ -11,7 +11,7 @@ RUN	adduser --disabled-password plex
 WORKDIR /tmp
 
 # Download and install latest version of Plex
-RUN DOWNLOAD_URL=`curl -Ls https://plex.tv/downloads | grep -o '[^"'"'"']*amd64.deb' | grep -v binaries` && \
+RUN DOWNLOAD_URL=`curl -Ls https://plex.tv/api/downloads/1.json | grep -o '[^"'"'"']*amd64.deb' | grep -v binaries` && \
     echo $DOWNLOAD_URL && \
     curl -L $DOWNLOAD_URL -o plexmediaserver.deb && \
     dpkg -i plexmediaserver.deb && \
